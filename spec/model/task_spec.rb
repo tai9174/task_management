@@ -11,14 +11,12 @@ describe 'タスクモデル機能', type: :model do
       it 'バリデーションにひっかかる' do
         task = Task.new(title:'失敗テスト', content:'')
         expect(task).not_to be_valid
-        # ここに内容を記載する
       end
     end
     context 'タスクのタイトルと詳細に内容が記載されている場合' do
       it 'バリデーションが通る' do
-        task = Task.new(title:'成功タイトル名',cocntent:'成功詳細')
+        task = Task.new(title:'成功タイトル名',content:'成功詳細')
         expect(task).to be_valid
-        # ここに内容を記載する
       end
     end
   end
