@@ -1,5 +1,6 @@
 require_relative 'boot'
 
+
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -15,6 +16,8 @@ module TaskManagement
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
     config.generators do |g|
       g.test_framework :rspec,
                         model_specs: true,
