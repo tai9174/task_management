@@ -3,11 +3,9 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    if params[:sort_expired_at]=="true"   
-      @tasks=Task.all.order(expired_at: :desc)
-    else
-      @tasks = Task.all.order(created_at: :desc)
-    end
+    @tasks = Task.all.order(created_at: :desc)
+    @tasks=Task.all.order(expired_at: :desc) if params[:sort_expired_at]=="true"   
+    @tasks=Task.all.order(priority: :desc) if params[:sort_priority]=="true" 
     if params[:search]
       @tasks = Task.all.where("title LIKE ?", "%#{params[:search][:title_search]}%") if params[:search][:title_search].present?
       @tasks = Task.where(status:params[:search][:status])if params[:search][:status].present?
@@ -73,6 +71,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :content,:expired_at,:status)
+      params.require(:task).permit(:title, :content,:expired_at,:status,:priority)
     end
 end
