@@ -3,12 +3,13 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
+    # @boards = Board.all.includes(:task).order(created_at: :desc).page(params[:page])
     @tasks = Task.all.order(created_at: :desc)
     @tasks=Task.all.order(expired_at: :desc) if params[:sort_expired_at]=="true"   
     @tasks=Task.all.order(priority: :desc) if params[:sort_priority]=="true" 
     if params[:search]
       @tasks = Task.all.where("title LIKE ?", "%#{params[:search][:title_search]}%") if params[:search][:title_search].present?
-      @tasks = Task.where(status:params[:search][:status])if params[:search][:status].present?
+      @tasks = @tasks.where(status:params[:search][:status])if params[:search][:status].present?
     end
   end
 
