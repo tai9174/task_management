@@ -8,6 +8,10 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all.order(created_at: :desc)
     end
+    if params[:search]
+      @tasks = Task.all.where("title LIKE ?", "%#{params[:search][:title_search]}%") if params[:search][:title_search].present?
+      @tasks = Task.where(status:params[:search][:status])if params[:search][:status].present?
+    end
   end
 
   # GET /tasks/1 or /tasks/1.json

@@ -4,8 +4,7 @@ class Task < ApplicationRecord
   validates :expired_at, presence: true
   validates :status, presence: true
   enum status:{
-    "---":0,
-    未着手:1, 着手中:2, 完了:3
-    
+    未着手:0, 着手中:1, 完了:2
+
   }    
 end

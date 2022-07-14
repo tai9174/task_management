@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label :ステータス %>
-    <%= form.select :status, Task.statuses.keys, {prompt: "選択してください"} , class: "status-select"%>
+    <%= form.select :status, Task.statuses.keys, {prompt: "---"} , class: "status-select"%>
   </div>
   <div class="actions">
     <%= form.submit %>
