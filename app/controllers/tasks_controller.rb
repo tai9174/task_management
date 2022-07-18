@@ -6,11 +6,16 @@ class TasksController < ApplicationController
     @tasks = Task.all.order(created_at: :desc).page params[:page]
     @tasks=Task.all.order(expired_at: :desc).page params[:page] if params[:sort_expired_at]=="true"   
     @tasks=Task.all.order(priority: :desc).page params[:page] if params[:sort_priority]=="true" 
-    if params[:search]
-      @tasks = Task.all.where("title LIKE ?", "%#{params[:search][:title_search]}%") if params[:search][:title_search].present?
-      @tasks = @tasks.where(status:params[:search][:status])if params[:search][:status].present?
-    end
-    @tasks = @tasks.page(params[:page]).per(10)
+      if params[:search][:title].present? && params[:search][:status].present?
+        @tasks =@tasks.search_title(params[:search][:title]).search_status(params[:search][:status])
+      elsif params[:search][:title].present?
+        @tasks =@tasks.search_title(params[:search][:title])
+      elsif params[:search][:status].present?
+        @tasks = @tasks.search_status(params[:search][:status])
+      else
+        @tasks = Task.all.order(created_at: :desc).page params[:page]
+      end
+      @tasks = @tasks.page(params[:page]).per(10)
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -66,12 +71,12 @@ class TasksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
     # Only allow a list of trusted parameters through.
-    def task_params
-      params.require(:task).permit(:title, :content,:expired_at,:status,:priority)
-    end
+  def task_params
+    params.require(:task).permit(:title, :content,:expired_at,:status,:priority)
+  end
 end
