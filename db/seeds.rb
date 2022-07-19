@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 User.create(name: "kenji",email:"kenji@gmail.com",password:"kenjikenji")
-User.create(name: "taro")
+User.create(name: "taro",email:"taro@gmail.com",password:"tarotaro")
 # 配列でまとめて作成
 # users = User.create([{name: "hanako"}, {name: "misa"}])
 # ループでまとめて作成
