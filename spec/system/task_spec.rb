@@ -81,7 +81,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:second_task, title: "sample", status: "未着手")
         visit tasks_path
         fill_in "search[title]", with:"t"
-        task_list = all('.task_row')
         click_on "検索する" 
         task_list = all('.task_row')
         expect(task_list[0]).to have_content 'test_title'
