@@ -10,5 +10,20 @@
   <%= @task.content %>
 </p>
 
+<p>
+  <strong>expired_at:</strong>
+  <%= @task.expired_at %>
+</p>
+
+<p>
+  <strong>status:</strong>
+  <%= @task.status %>
+</p>
+
+<p>
+  <strong>priority:</strong>
+  <%= @task.priority %>
+</p>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>

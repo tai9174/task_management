@@ -21,6 +21,21 @@
     <%= form.text_field :content %>
   </div>
 
+  <div class="field">
+    <%= form.label :終了期限 %>
+    <%= form.date_select :expired_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ステータス %>
+    <%= form.select :status, Task.statuses.keys, {prompt: "---"} , class: "status-select"%>
+  </div>
+
+  <div class="field">
+    <%= form.label :優先度 %>
+    <%= form.select :priority, Task.priorities.keys, {prompt: "---"} , class: "priority-select"%>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

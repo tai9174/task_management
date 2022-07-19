@@ -1,10 +1,23 @@
- class TasksController < ApplicationController
+class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = Task.all.order(created_at: :desc).page params[:page]
+    @tasks=Task.all.order(expired_at: :desc).page params[:page] if params[:sort_expired_at]=="true"   
+    @tasks=Task.all.order(priority: :desc).page params[:page] if params[:sort_priority]=="true" 
+    if params[:search].present?
+      if params[:search][:title].present? && params[:search][:status].present?
+        @tasks =@tasks.search_title(params[:search][:title]).search_status(params[:search][:status])
+      elsif params[:search][:title].present?
+        @tasks =@tasks.search_title(params[:search][:title])
+      elsif params[:search][:status].present?
+        @tasks = @tasks.search_status(params[:search][:status])
+      else
+        @tasks = Task.all.order(created_at: :desc).page params[:page]
+      end
+      @tasks = @tasks.page(params[:page]).per(10)
+    end
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -60,12 +73,12 @@
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
     # Only allow a list of trusted parameters through.
-    def task_params
-      params.require(:task).permit(:title, :content)
-    end
+  def task_params
+    params.require(:task).permit(:title, :content,:expired_at,:status,:priority,:created_at)
+  end
 end
