@@ -6,6 +6,7 @@ class TasksController < ApplicationController
     @tasks = Task.all.order(created_at: :desc).page params[:page]
     @tasks=Task.all.order(expired_at: :desc).page params[:page] if params[:sort_expired_at]=="true"   
     @tasks=Task.all.order(priority: :desc).page params[:page] if params[:sort_priority]=="true" 
+    if params[:search].present?
       if params[:search][:title].present? && params[:search][:status].present?
         @tasks =@tasks.search_title(params[:search][:title]).search_status(params[:search][:status])
       elsif params[:search][:title].present?
@@ -16,6 +17,7 @@ class TasksController < ApplicationController
         @tasks = Task.all.order(created_at: :desc).page params[:page]
       end
       @tasks = @tasks.page(params[:page]).per(10)
+    end
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -77,6 +79,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:title, :content,:expired_at,:status,:priority)
+    params.require(:task).permit(:title, :content,:expired_at,:status,:priority,:created_at)
   end
 end
