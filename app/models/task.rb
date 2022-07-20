@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   validates :status, presence: true
   validates :priority, presence: true
   paginates_per 10
+  belongs_to :user
   enum status:{
     未着手:0, 着手中:1, 完了:2
   } 

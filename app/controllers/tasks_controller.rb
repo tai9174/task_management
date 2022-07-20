@@ -35,8 +35,9 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
+    @task = current_user.tasks.build(task_params)
     @task = Task.new(task_params)
-
+    
     respond_to do |format|
       if @task.save
         format.html { redirect_to task_url(@task), notice: "Task は作成されました！" }
