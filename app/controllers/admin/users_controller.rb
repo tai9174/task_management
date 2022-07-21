@@ -35,7 +35,7 @@ class Admin::UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to task_url(@task), notice: "Task は更新されました！" }
+        format.html { redirect_to (@task), notice: "Task は更新されました！" }
         format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +55,7 @@ class Admin::UsersController < ApplicationController
   private
 
   def if_not_admin
-    redirect_to root_path unless current_user.admin?
+    redirect_to tasks_path flash[:notice] ="管理者以外はアクセスできません"unless current_user.admin?
   end
 
   def set_user

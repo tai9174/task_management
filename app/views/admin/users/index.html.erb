@@ -12,11 +12,20 @@
 
   <tbody>
     <% @users.each do |user| %>
-      <tr class="task_row">
+      <% counter = 0 %>
+      <tr >
         <td ><%= user.admin %></td>
         <td ><%= user.name %></td>
         <td ><%= user.email %></td>
-        <td ><%= user.tasks.count %></td>
+        <% user.tasks.each do |task| %>
+          <% counter += 1%>
+          <% end %>
+        <td><%= counter%>
+        <%
+=begin%>
+ <td ><%= user.tasks.count %></td> 
+<%
+=end%>
 
         <td><%= link_to '詳細', admin_user_path(user) %></td>
         <td><%= link_to '編集', edit_admin_user_path(user) %></td>
