@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   root 'tasks#index'
   resources :sessions, only: [:new, :create, :destroy]
   resources :tasks
-  resources :users, only: [:new,:create, :show]
+  resources :users, only: [:index,:new,:create, :show]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :admin do
+    resources :users, only: [:index, :new, :create, :show,  :edit, :destroy]
+  end
 end

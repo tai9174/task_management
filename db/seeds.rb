@@ -7,6 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.create(name: "kenji",email:"kenji@gmail.com",password:"kenjikenji")
 User.create(name: "taro",email:"taro@gmail.com",password:"tarotaro")
+User.create!(username:  "管理者",
+  email: "admin@example.jp",
+  password:  "11111111",
+  password_confirmation: "11111111",
+  admin: true)
 # 配列でまとめて作成
 # users = User.create([{name: "hanako"}, {name: "misa"}])
 # ループでまとめて作成

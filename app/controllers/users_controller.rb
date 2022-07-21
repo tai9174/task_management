@@ -2,6 +2,8 @@ class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
   
   def new
+    redirect_to tasks_path if logged_in? 
+    flash[:notice] ="すでにあなたはログインしていますよ。"
     @user = User.new
   end
 
@@ -16,8 +18,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    if @user == current_user
+    if current_user.admin ==true
+      @user = User.find(params[:id])
+    elsif User.find(params[:id])== current_user
+      @user = User.find(params[:id])
     else
       redirect_to tasks_path
     end
@@ -27,6 +31,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password,
-                                  :password_confirmation)
+                                  :password_confirmation,:admin)
   end
 end
