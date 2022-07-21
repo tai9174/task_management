@@ -3,4 +3,8 @@
 <p>メールアドレス: <%= @user.email %></p>
 
 <%= link_to 'タスク一覧', tasks_path %>
+
+<% if current_user.admin == true %>
 <%= link_to '管理画面', admin_users_path %>
+<% else %>
+<% end %>

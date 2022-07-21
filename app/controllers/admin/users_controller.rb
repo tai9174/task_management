@@ -3,15 +3,16 @@ class Admin::UsersController < ApplicationController
   before_action :set_user,only:[:show,:edit,:update,:destroy]
 
   def index
-    @users = User.all.order("created_at DESC")
+    @users = User.all.includes(:tasks).order("created_at DESC")
   end
 
   def new
     @user = User.new
   end
-  
+
   def show
     @user = User.find(params[:id])
+    @tasks = @user.tasks
   end
 
   def edit
@@ -45,7 +46,7 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: "user は削除されました！" }
+      format.html { redirect_to admin_users_path, notice: "user は削除されました！" }
       format.json { head :no_content }
     end
   end

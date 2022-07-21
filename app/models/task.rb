@@ -12,6 +12,8 @@ class Task < ApplicationRecord
   enum priority:{
     低:0, 中:1, 高:2
   } 
+  enum admin:{
+    true:0, false:1  } 
   scope :search_title, -> (title) {where("title LIKE ?", "%#{title}%")}
   scope :search_status, -> (status) {where(status: status)}
 

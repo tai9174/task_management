@@ -12,6 +12,9 @@
 <% end %>
 
 <%= form_with(model: @user, local: true) do |f| %>
+  <%= f.label :管理者 %>
+  <%= f.select :admin, Task.admins.keys, {prompt: "選択してください"} , class: "admin-select"%>
+
   <%= f.label :name %>
   <%= f.text_field :name %>
 
@@ -24,8 +27,6 @@
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
   
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
 
-  <%= f.submit "新規ユーザー作成" %>
+  <%= f.submit "ユーザー作成" %>
 <% end %>
