@@ -24,7 +24,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        format.html { redirect_to user_url(@user), notice: "ユーザーが作成しました" }
+        format.html { redirect_to user_url(@user), notice: "ユーザーを作成しました" }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }

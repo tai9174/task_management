@@ -59,7 +59,6 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
 
-    # テスト内容を追加で記載する
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
         FactoryBot.create(:task, title:"test_title", created_at:Date.today, user: user)

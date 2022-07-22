@@ -1,8 +1,5 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
-  # before do
-  #   【共通の前準備をする】
-  # end
 
   describe 'ユーザ登録のテスト' do
     context 'ユーザの新規登録した場合' do
