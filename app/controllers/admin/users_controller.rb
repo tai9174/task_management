@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  
   before_action :if_not_admin
   before_action :set_user,only:[:show,:edit,:update,:destroy]
 
@@ -31,7 +32,7 @@ class Admin::UsersController < ApplicationController
       end
     end
   end
-  
+
   def update
     respond_to do |format|
       if @user.update(user_params)
@@ -51,8 +52,8 @@ class Admin::UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   
+
   private
 
   def if_not_admin
@@ -66,4 +67,6 @@ class Admin::UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name,:email,:password,:password_digest,:admin)
   end
+
+  
 end
