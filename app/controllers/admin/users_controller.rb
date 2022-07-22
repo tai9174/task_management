@@ -20,29 +20,30 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    @user = current_user.tasks.build(user_params)
-    
+    @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        format.html { redirect_to task_url(@task), notice: "Task は作成されました！" }
-        format.json { render :show, status: :created, location: @task }
+        format.html { redirect_to user_url(@user), notice: "ユーザーが作成しました" }
+        format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
+  
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to (@task), notice: "Task は更新されました！" }
-        format.json { render :show, status: :ok, location: @task }
+        format.html { redirect_to user_url(@user), notice: "ユーザーの更新に成功しました" }
+        format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
+
   def destroy
     @user.destroy
     respond_to do |format|
@@ -63,6 +64,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name,:email,:password,:password_digest)
+    params.require(:user).permit(:name,:email,:password,:password_digest,:admin)
   end
 end
