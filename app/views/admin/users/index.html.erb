@@ -1,0 +1,34 @@
+<h1>管理画面<h1>
+<h3>ユーザー 一覧<h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">管理者</th>
+      <th scope="col">名前</th>
+      <th scope="col">メール</th>
+      <th scope="col">タスク数</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <% counter = 0 %>
+      <tr >
+        <td ><%= user.admin %></td>
+        <td ><%= user.name %></td>
+        <td ><%= user.email %></td>
+        <% user.tasks.each do |task| %>
+          <% counter += 1%>
+          <% end %>
+        <td><%= counter%>
+
+        <td><%= link_to '詳細', admin_user_path(user) %></td>
+        <td><%= link_to '編集', edit_admin_user_path(user) %></td>
+        <td><%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %></td>   
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to '新規ユーザーを作成', new_admin_user_path %>
+
