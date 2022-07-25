@@ -12,6 +12,12 @@ User.create!(username:  "管理者",
   password:  "11111111",
   password_confirmation: "11111111",
   admin: true)
+
+Label.create(name:"A")
+Label.create(name:"B")
+Label.create(name:"C")
+Label.create(name:"D")
+
 # 配列でまとめて作成
 # users = User.create([{name: "hanako"}, {name: "misa"}])
 # ループでまとめて作成
