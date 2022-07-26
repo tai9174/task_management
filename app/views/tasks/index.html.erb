@@ -1,9 +1,10 @@
-
-
 <h1><%= current_user.name %>のタスク一覧</h1>
 <%= form_with(scope: :search,url: tasks_path,local: true, method: :get) do |form| %>
   <div class="field">
-  タスク名<%= form.text_field :title ,placeholder: "検索..."%> ステータス<%= form.select :status, Task.statuses.keys, {prompt: "---"} , class: "status-select"%><%= form.submit value="検索する"%>
+  タスク名<%= form.text_field :title ,placeholder: "検索..."%>
+  ステータス<%= form.select :status, Task.statuses.keys, {prompt: "---"} , class: "status-select"%>
+  ラベル<%= form.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
+  <%= form.submit value="検索する"%>
   </div>
   
 <% end %>
@@ -18,6 +19,7 @@
       <th scope="col">登録日時</th>
       <th scope="col">ステータス</th>
       <th scope="col"><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
+      <th scope="col">ラベル</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -32,9 +34,14 @@
         <td ><%= task.created_at %></td>
         <td ><%= task.status %></td>
         <td ><%= task.priority %></td>
+        <td>
+          <% task.labels.each do |label| %>
+            <%= label.name %>
+          <% end %>
+        </td>
         <td><%= link_to '詳細', task %></td>
         <td><%= link_to '編集', edit_task_path(task) %></td>
-        <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>     
       </tr>
     <% end %>
   </tbody>

@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings
   validates :title, presence: true
   validates :content, presence: true
   validates :expired_at, presence: true
@@ -17,6 +19,4 @@ class Task < ApplicationRecord
   scope :search_title, -> (title) {where("title LIKE ?", "%#{title}%")}
   scope :search_status, -> (status) {where(status: status)}
 
-  # @tasks = Task.all.where("title LIKE ?", "%#{params[:search][:title_search]}%") if params[:search][:title_search].present?
-  # @tasks = @tasks.where(status:params[:search][:status])if pbundle exec rspearams[:search][:status].present?
 end
