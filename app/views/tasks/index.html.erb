@@ -1,9 +1,10 @@
 <h1><%= current_user.name %>のタスク一覧</h1>
 <%= form_with(scope: :search,url: tasks_path,local: true, method: :get) do |form| %>
   <div class="field">
-  タスク名<%= form.text_field :title ,placeholder: "検索..."%> ステータス<%= form.select :status, Task.statuses.keys, {prompt: "---"} , class: "status-select"%><%= form.submit value="検索する"%>
-  <%= form.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
-  <%= form.submit 'Search', name: nil %>
+  タスク名<%= form.text_field :title ,placeholder: "検索..."%>
+  ステータス<%= form.select :status, Task.statuses.keys, {prompt: "---"} , class: "status-select"%>
+  ラベル<%= form.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
+  <%= form.submit value="検索する"%>
   </div>
   
 <% end %>

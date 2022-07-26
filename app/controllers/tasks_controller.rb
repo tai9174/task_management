@@ -4,7 +4,6 @@ class TasksController < ApplicationController
   # GET /tasks or /tasks.json
   def index
     @tasks = current_user.tasks.order(created_at: :desc).page params[:page]
-    @tasks = current_user.tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
     @tasks=current_user.tasks.order(expired_at: :desc).page params[:page] if params[:sort_expired_at]=="true"   
     @tasks=current_user.tasks.order(priority: :desc).page params[:page] if params[:sort_priority]=="true" 
     if params[:search].present?
@@ -14,10 +13,10 @@ class TasksController < ApplicationController
         @tasks =@tasks.search_title(params[:search][:title])
       elsif params[:search][:status].present?
         @tasks = @tasks.search_status(params[:search][:status])
-      else
-        @tasks = Task.all.order(created_at: :desc).page params[:page]
+      elsif params[:search][:label_id].present?
+        @tasks =@tasks.joins(:labels).where(labels: { id: params[:search][:label_id] })
       end
-      @tasks = @tasks.page(params[:page]).per(10)
+        @tasks = @tasks.page(params[:page]).per(10)
     end
   end
 
