@@ -1,6 +1,6 @@
 class LabelsController < ApplicationController
   before_action :set_label, only: %i[ show edit update destroy ]
-
+  before_action :if_not_admin
   # GET /labels or /labels.json
   def index
     @labels = Label.all
@@ -67,4 +67,9 @@ class LabelsController < ApplicationController
     def label_params
       params.require(:label).permit(:name)
     end
+
+    def if_not_admin
+      redirect_to tasks_path flash[:notice] ="管理者以外はアクセスできません"unless current_user.admin?
+    end
+  
 end
